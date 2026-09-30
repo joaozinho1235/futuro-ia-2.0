@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sua Jornada na Era da IA</title>
+  <!-- Fonte moderna Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --btn-bg: #334155;
+      --btn-border: #475569;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      padding: 36px;
+      border-radius: 16px;
+      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.05);
+      max-width: 640px;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    /* Barra de Progresso */
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background-color: var(--btn-bg);
+      border-radius: 10px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      transition: width 0.4s ease;
+      border-radius: 10px;
+    }
+
+    h1, h2 {
+      color: var(--primary);
+      margin-top: 0;
+      font-weight: 700;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .opcoes {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn-opcao {
+      background-color: var(--btn-bg);
+      color: var(--text-main);
+      border: 1.5px solid var(--btn-border);
+      padding: 16px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1.5;
+      text-align: left;
+      font-family: inherit;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-opcao:hover, .btn-opcao:focus-visible {
+      background-color: rgba(56, 189, 248, 0.1);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .historia-final {
+      line-height: 1.7;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+    }
+
+    .historia-final strong {
+      color: var(--primary);
+    }
+
+    .btn-reiniciar {
+      margin-top: 28px;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #ffffff;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      width: 100%;
+      transition: all 0.25s ease;
+    }
+
+    .btn-reiniciar:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+    }
+
+    /* Animação suave de entrada */
+    .fade-in {
+      animation: fadeIn 0.35s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div id="quiz-box" class="fade-in">
+      <div class="progress-bar-container">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+      <h2 id="pergunta-titulo">Carregando...</h2>
+      <div id="opcoes-container" class="opcoes"></div>
+    </div>
+
+    <div id="resultado-box" class="fade-in" style="display: none;">
+      <h1>Sua História no Futuro</h1>
+      <p id="texto-historia" class="historia-final"></p>
+      <button class="btn-reiniciar" onclick="reiniciarQuiz()">Jogar Novamente</button>
+    </div>
+  </div>
+
+  <script>
+    const perguntas = [
+      {
+        titulo: "Como você começou a interagir com a Inteligência Artificial?",
+        opcoes: [
+          "Criando um assistente pessoal para automatizar toda a sua rotina",
+          "Usando a IA para gerar arte e escrever histórias criativas",
+          "Pesquisando formas de usar a IA para resolver problemas ambientais"
+        ]
+      },
+      {
+        titulo: "Anos depois, qual ferramenta de IA você decidiu implementar no seu dia a dia?",
+        opcoes: [
+          "Um chip neural que conecta sua mente diretamente à rede",
+          "Um robô androide focado em realizar tarefas físicas e proteger sua casa",
+          "Um sistema global de previsão de dados que guia suas decisões financeiras"
+        ]
+      },
+      {
+        titulo: "Diante do avanço acelerado da IA, qual foi sua postura principal?",
+        opcoes: [
+          "Liderou um movimento para garantir que humanos e IAs tivessem direitos iguais",
+          "Preferiu viver em uma comunidade isolada buscando o equilíbrio com a natureza",
+          "Tornou-se diretor de uma grande corporação de tecnologia moldando o futuro digital"
+        ]
+      }
+    ];
+
+    let indicePerguntaAtual = 0;
+    const escolhasUsuario = [];
+
+    const quizBox = document.getElementById("quiz-box");
+    const resultadoBox = document.getElementById("resultado-box");
+    const perguntaTitulo = document.getElementById("pergunta-titulo");
+    const containerOpcoes = document.getElementById("opcoes-container");
+    const progressBar = document.getElementById("progress-bar");
+    const textoHistoria = document.getElementById("texto-historia");
+
+    function carregarPergunta() {
+      const perguntaAtual = perguntas[indicePerguntaAtual];
+      
+      // Atualiza progresso
+      const progresso = ((indicePerguntaAtual) / perguntas.length) * 100;
+      progressBar.style.width = `${progresso}%`;
+
+      perguntaTitulo.innerText = `Pergunta ${indicePerguntaAtual + 1}: ${perguntaAtual.titulo}`;
+      containerOpcoes.innerHTML = "";
+
+      perguntaAtual.opcoes.forEach((opcaoTexto) => {
+        const botao = document.createElement("button");
+        botao.className = "btn-opcao";
+        botao.innerText = opcaoTexto;
+        botao.onclick = () => selecionarOpcao(opcaoTexto);
+        containerOpcoes.appendChild(botao);
+      });
+      
+      // Efeito visual de entrada
+      quizBox.classList.remove("fade-in");
+      void quizBox.offsetWidth; // Trigger reflow
+      quizBox.classList.add("fade-in");
+    }
+
+    function selecionarOpcao(textoSelecionado) {
+      // Normaliza o texto removendo ponto final caso exista
+      const textoFormatado = textoSelecionado.replace(/\.$/, "").toLowerCase();
+      escolhasUsuario.push(textoFormatado);
+      
+      indicePerguntaAtual++;
+
+      if (indicePerguntaAtual < perguntas.length) {
+        carregarPergunta();
+      } else {
+        mostrarHistoria();
+      }
+    }
+
+    function mostrarHistoria() {
+      quizBox.style.display = "none";
+      resultadoBox.style.display = "block";
+
+      const historia = `
+        No início da revolução tecnológica, você deu o primeiro passo <strong>${escolhasUsuario[0]}</strong>.<br><br>
+        Com o passar do tempo e o avanço das máquinas, você deu um salto definitivo ao adotar <strong>${escolhasUsuario[1]}</strong>.<br><br>
+        No auge da era da inteligência artificial, sua atitude marcou a história quando você <strong>${escolhasUsuario[2]}</strong>.<br><br>
+        <strong>O Resultado do Futuro:</strong> Suas decisões criaram um legado único. As futuras gerações lembram de você como uma figura central no ponto de virada entre a humanidade e a IA.
+      `;
+
+      textoHistoria.innerHTML = historia;
+    }
+
+    function reiniciarQuiz() {
+      indicePerguntaAtual = 0;
+      escolhasUsuario.length = 0;
+      quizBox.style.display = "block";
+      resultadoBox.style.display = "none";
+      carregarPergunta();
+    }
+
+    // Inicialização
+    carregarPergunta();
+  </script>
+
+</body>
+</html>
